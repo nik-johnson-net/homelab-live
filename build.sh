@@ -12,8 +12,10 @@ function apply_overlay() {
 }
 
 function create_rootfs() {
+    rm -f "$BUILD_ROOT/squashfs.img"
     mksquashfs "$PWD" "$BUILD_ROOT/squashfs.img" -comp xz -no-progress -noappend
-    chown $SUDO_USER:$SUDO_USER "$BUILD_ROOT/squashfs.img"
+    tar -C "$BUILD_ROOT" -cf "$BUILD_ROOT/squashfs.tgz" "squashfs.img"
+    chown $SUDO_USER:$SUDO_USER "$BUILD_ROOT/squashfs.tgz"
 }
 
 function create_vmlinuz() {
