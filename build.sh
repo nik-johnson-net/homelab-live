@@ -8,14 +8,12 @@ function fail() {
 }
 
 function apply_overlay() {
-    cp -a "$OVERLAY/"* "$PWD"
+    cp -dR "$OVERLAY/"* "$PWD"
 }
 
 function create_rootfs() {
-    mksquashfs "$PWD" "$BUILD_ROOT/rootfs.img" -comp xz -no-progress -noappend
-    tar -C "$BUILD_ROOT" -cf "$BUILD_ROOT/rootfs.tgz" "rootfs.img"
-    chown $SUDO_USER:$SUDO_USER "$BUILD_ROOT/rootfs.tgz"
-    rm "$BUILD_ROOT/rootfs.img"
+    mksquashfs "$PWD" "$BUILD_ROOT/squashfs.img" -comp xz -no-progress -noappend
+    chown $SUDO_USER:$SUDO_USER "$BUILD_ROOT/squashfs.img"
 }
 
 function create_vmlinuz() {
